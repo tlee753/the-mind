@@ -8,7 +8,9 @@ import time
 startTime = time.time()
 
 class Neuron:
-    def __init__(self, x=0, y=0, z=0):
+    def __init__(self, id=0, x=0, y=0, z=0, purpose=0):
+        self.id = id
+        self.purpose = purpose # 0 for normal, 1 for input, 2 for output
         self.value = 1
         self.connections = []
         self.connectionsPlotted = []
@@ -34,12 +36,12 @@ def neuronStats(neuron):
     print()
 
 
-numNeurons = 800
+numNeurons = 200
 neurons = []
-physicalLimit = 3 # microns
-biologicalLimit = 2000
-maxOriginDist = 4000
-maxConnections = 100
+physicalLimit = 5 # microns
+biologicalLimit = 1000
+maxOriginDist = 2000
+maxConnections = 200
 
 def createNeurons():
     for i in range(numNeurons):
@@ -63,7 +65,7 @@ def createNeurons():
                     break
             
             if growable:
-                neurons.append( Neuron(x, y, z) )
+                neurons.append( Neuron(i, x, y, z) )
                 break
         
 
@@ -74,23 +76,24 @@ def createNeurons():
 
 
 def creationConnections():
-    for i in range(len(neurons)):
+    for i in range(numNeurons):
         counter = 0
-        while len(neurons[i].connections) < maxConnections and counter < 1000:
+        neuron = neurons[i]
+        while len(neuron.connections) < maxConnections and counter < 1000:
             counter += 1
-            randomNeuronID = randint(0, len(neurons)-1)
+            randomNeuronID = randint(0, numNeurons-1)
             randomNeuron = neurons[randomNeuronID]
-            randomNeuronDist = sqrt( (neurons[i].x - randomNeuron.x)**2 + (neurons[i].y - randomNeuron.y)**2 + (neurons[i].z - randomNeuron.z)**2 )
+            randomNeuronDist = sqrt( (neuron.x - randomNeuron.x)**2 + (neuron.y - randomNeuron.y)**2 + (neuron.z - randomNeuron.z)**2 )
 
             closeEnough = randomNeuronDist < biologicalLimit
             isntFullyConnected = len(randomNeuron.connections) < maxConnections
-            notAlreadyConnected = randomNeuronID not in neurons[i].connections
+            notAlreadyConnected = randomNeuronID not in neuron.connections
             notTheSameNeuron = randomNeuronID != i
 
             # print(closeEnough, isntFullyConnected, notAlreadyConnected, notTheSameNeuron)
 
             if closeEnough and isntFullyConnected and notAlreadyConnected and notTheSameNeuron:
-                neurons[i].connections.append(randomNeuronID)
+                neuron.connections.append(randomNeuronID)
                 randomNeuron.connections.append(i)
 
 
@@ -119,6 +122,13 @@ def visualizeTheMind():
     ax.scatter3D(x, y, z, c=c, cmap='Spectral')
 
     plt.show()
+
+
+# def printTheMind():
+#     for neuron in neurons:
+#         mindFile.write(str(nueron) + ",")
+#         mindFile.write(nueron.connections):
+
 
 
 print("Creating Neurons\n")
