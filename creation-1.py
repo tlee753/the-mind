@@ -30,13 +30,13 @@ class Neuron:
 def neuronStats(neuron):
     print(neuron)
     print(neuron.connections)
-    print(len(neuron.connections))
+    print("Connections: ", len(neuron.connections))
+    print()
 
 
-
-numNeurons = 400
+numNeurons = 800
 neurons = []
-physicalLimit = 3
+physicalLimit = 3 # microns
 biologicalLimit = 2000
 maxOriginDist = 4000
 maxConnections = 100
@@ -87,7 +87,7 @@ def creationConnections():
             notAlreadyConnected = randomNeuronID not in neurons[i].connections
             notTheSameNeuron = randomNeuronID != i
 
-            print(closeEnough, isntFullyConnected, notAlreadyConnected, notTheSameNeuron)
+            # print(closeEnough, isntFullyConnected, notAlreadyConnected, notTheSameNeuron)
 
             if closeEnough and isntFullyConnected and notAlreadyConnected and notTheSameNeuron:
                 neurons[i].connections.append(randomNeuronID)
@@ -121,10 +121,21 @@ def visualizeTheMind():
     plt.show()
 
 
-
+print("Creating Neurons\n")
 createNeurons()
+
+print("Creating Connections\n")
 creationConnections()
+
+print("Single Neuron Stats")
 neuronStats(neurons[0])
+
+print("Global Neuron Stats")
+
+sum = 0
+for neuron in neurons:
+    sum += len(neuron.connections)
+print("Neurons: {}, Neuron Connections: {}".format(numNeurons, sum))
 
 print("Neural Density is {}".format(numNeurons / (maxOriginDist *2)**3))
 
