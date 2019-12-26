@@ -29,21 +29,15 @@ class Neuron:
         # use connected neurons plus random quantity to adjust current value
 
 
-def neuronStats(neuron):
-    print(neuron)
-    print(neuron.connections)
-    print("Connections: ", len(neuron.connections))
-    print()
 
-
-numNeurons = 200
+numNeurons = 4000
 neurons = []
 physicalLimit = 5 # microns
 biologicalLimit = 1000
 maxOriginDist = 2000
 maxConnections = 200
 
-def createNeurons():
+def growTheMind():
     for i in range(numNeurons):
         # print("Neuron: ", i)
 
@@ -75,7 +69,7 @@ def createNeurons():
         # cubical pattern
 
 
-def creationConnections():
+def connectTheMind():
     for i in range(numNeurons):
         counter = 0
         neuron = neurons[i]
@@ -96,6 +90,18 @@ def creationConnections():
                 neuron.connections.append(randomNeuronID)
                 randomNeuron.connections.append(i)
 
+def processTheMind():
+    # process inputs in a thinking sense to result in an output
+    pass
+
+def thinkTheMind():
+    # no inputs, simulated neuron firing to appropriate an outcome?
+    pass
+
+def sleepTheMind():
+    # no inputs, reinforcing neurological constructs
+        # based on what?
+    pass
 
 def visualizeTheMind():
     fig = plt.figure(figsize=(16,9))
@@ -124,21 +130,31 @@ def visualizeTheMind():
     plt.show()
 
 
-# def printTheMind():
+# def importTheMind():
 #     for neuron in neurons:
 #         mindFile.write(str(nueron) + ",")
 #         mindFile.write(nueron.connections):
 
 
+# def exportTheMind():
+#     for neuron in neurons:
+#         mindFile.write(str(nueron) + ",")
+#         mindFile.write(nueron.connections):
+
+def statOnTheMind(neuron):
+    print(neuron)
+    print(neuron.connections)
+    print("Connections: ", len(neuron.connections))
+    print()
 
 print("Creating Neurons\n")
-createNeurons()
+growTheMind()
 
 print("Creating Connections\n")
-creationConnections()
+connectTheMind()
 
 print("Single Neuron Stats")
-neuronStats(neurons[0])
+statOnTheMind(neurons[0])
 
 print("Global Neuron Stats")
 
@@ -151,4 +167,4 @@ print("Neural Density is {}".format(numNeurons / (maxOriginDist *2)**3))
 
 print(" --- %s seconds --- " % (time.time() - startTime))
 
-visualizeTheMind()
+# visualizeTheMind()
